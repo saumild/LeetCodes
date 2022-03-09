@@ -13,25 +13,20 @@ class Solution {
         map.put("D", 500);
         map.put("M", 1000);
         
-        map.put("IV", 4);
-        map.put("IX", 9);
-        map.put("XL", 40);
-        map.put("XC", 90);
-        map.put("CD", 400);
-        map.put("CM", 900);
-        
-        int ans = 0;
-        for(int i = 0; i< s.length();i++){
-            if(i+1<s.length() && map.containsKey(Character.toString(s.charAt(i)) + Character.toString(s.charAt(i+1)) + "")){
-                //System.out.println("inside");
-                ans += map.get(Character.toString(s.charAt(i)) + Character.toString(s.charAt(i+1)));
-                i++;
-                continue;
+        String lastSymbol = s.substring(s.length() - 1);
+        int lastValue = map.get(lastSymbol);
+        int total = lastValue;
+
+        for (int i = s.length() - 2; i >= 0; i--) {
+            String currentSymbol = s.substring(i, i + 1);
+            int currentValue = map.get(currentSymbol);
+            if (currentValue < lastValue) {
+                total -= currentValue;
+            } else {
+                total += currentValue;
             }
-            if(map.containsKey(s.charAt(i) + ""))
-                ans += map.get(s.charAt(i) + "");
-            //System.out.println(ans);
+            lastValue = currentValue;
         }
-        return ans;
+        return total;
     }
 }
