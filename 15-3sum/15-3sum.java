@@ -11,7 +11,7 @@ class Solution {
         if(nums.length<3)
             return new ArrayList<>();
         Arrays.sort(nums);
-        for(int i = 0; i<nums.length;i++){
+        for(int i = 0; i<nums.length && nums[i]<= 0;i++){
             if(i == 0 || nums[i-1] != nums[i])
                 twoSum(nums,ans, i);
         }
