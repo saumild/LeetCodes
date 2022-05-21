@@ -1,46 +1,29 @@
 class Solution {
     public String tictactoe(int[][] moves) {
-       int i,arr[][]=new int[3][3];
-        
-        //storing moves
-        for(i=0;i<moves.length;i++)
-            if(i%2==0)
-                arr[moves[i][0]][moves[i][1]]=1;
-            else
-                arr[moves[i][0]][moves[i][1]]=-1;
-        
-        //checking winner from rows and columns
-        for(i=0;i<3;i++) {
-            if(arr[i][0]==arr[i][1]&&arr[i][1]==arr[i][2])
-                if(arr[i][0]==1)
-                    return "A";
-                else if(arr[i][0]==-1)
-                    return "B";
-            if(arr[0][i]==arr[1][i]&&arr[1][i]==arr[2][i])
-                if(arr[0][i]==1)
-                    return "A";
-                else if(arr[0][i]==-1)
-                    return "B";
+        int n = moves.length;
+        if (n < 5) {
+            return "Pending";    
+        } else if (n < 9) {
+            if (wonByLastMove(moves)) {
+                return n % 2 == 1 ? "A" : "B";
+            } else {
+                return "Pending";
+            }
         }
+        return wonByLastMove(moves) ? "A" : "Draw";
+    }
+    
+    private boolean wonByLastMove(int[][] moves) {
+        int[] lastMove = moves[moves.length-1];
+        int row = 1, col = 1, diag = 1, revDiag = 1;
         
-        //checking winner from main diagonal
-        if(arr[0][0]==arr[1][1]&&arr[1][1]==arr[2][2])
-            if(arr[0][0]==1)
-                return "A";
-            else if(arr[0][0]==-1)
-                return "B";
-        
-        //checking winner from right diagonal
-        if(arr[2][0]==arr[1][1]&&arr[1][1]==arr[0][2])
-            if(arr[2][0]==1)
-                return "A";
-            else if(arr[2][0]==-1)
-                return "B";
-        
-        if(moves.length<9)
-            return "Pending";
-        
-        return "Draw";
-        
+        for (int i = moves.length-3; i >= 0; i -= 2) {
+            int[] curr = moves[i];
+            if (curr[0] == lastMove[0]) row++;
+            if (curr[1] == lastMove[1]) col++;
+            if (curr[0] == curr[1] && lastMove[0] == lastMove[1]) diag++;
+            if (curr[0] + curr[1] == 2 && lastMove[0] + lastMove[1] == 2) revDiag++;
+        }
+        return row == 3 || col == 3 || diag == 3 || revDiag == 3;
     }
 }
