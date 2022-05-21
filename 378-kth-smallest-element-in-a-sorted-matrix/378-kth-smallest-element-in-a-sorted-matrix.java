@@ -23,11 +23,6 @@ class MyHeapNode {
   }
 }
 
-class MyHeapComparator implements Comparator<MyHeapNode> {
-  public int compare(MyHeapNode x, MyHeapNode y) {
-    return x.value - y.value;
-  }
-}
 
 class Solution {
 
@@ -36,7 +31,7 @@ class Solution {
     int N = matrix.length;
 
     PriorityQueue<MyHeapNode> minHeap =
-        new PriorityQueue<MyHeapNode>(Math.min(N, k), new MyHeapComparator());
+        new PriorityQueue<MyHeapNode>(Math.min(N, k), (MyHeapNode x,MyHeapNode y) -> x.value - y.value);
 
     // Preparing our min-heap
     for (int r = 0; r < Math.min(N, k); r++) {
