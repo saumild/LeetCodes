@@ -1,44 +1,27 @@
 class Solution {
+    int[] parent;
     public boolean validPath(int n, int[][] edges, int source, int destination) {
-        // if(source == destination)
-        //     return false;
-        HashMap<Integer, List<Integer>> map = new HashMap<>();
-        List<Integer> temp = new ArrayList<>();
-        for(int i = 0 ; i < n ; i++) map.put(i, new ArrayList());
-        for(int[] i : edges){
-            map.get(i[0]).add(i[1]);
-            map.get(i[1]).add(i[0]);
+        parent = new int[n+1];
+        
+        for(int i = 0; i< n; i++ ){
+            parent[i] = i;
         }
-        
-        // for(Map.Entry<Integer,List<Integer>> m : map.entrySet()){
-        //     System.out.println(m.getKey() + " [" + m.getValue() + "]");
-        // }
-        
-        Stack<Integer> s = new Stack<>();
-        boolean[] v = new boolean[n];
-        s.add(source);
-        
-        while(!s.isEmpty()){
-            int curr = s.pop();
-            v[curr] = true;
+        for(int[] e: edges){
+            int p1 = findParent(e[0]);
+            int p2 = findParent(e[1]);
             
-            if(curr == destination)
-                return true;
-          
-            for(int next : map.get(curr)){
-              
-                if(!v[next]){
-                    if(next == destination)
-                        return true;
-                    s.push(next);
-                }
-                
+            if(p1 != p2){
+               parent[p2] = p1; 
             }
         }
+        if(findParent(source) == findParent(destination))
+            return true;
+        else
+            return false;
+    }
+    
+    public int findParent(int u){
+        return (parent[u] == u)?u : (parent[u] = findParent(parent[u]));
         
-        return false;
     }
 }
-
-// Run DFS over source node and see if you can reach dest.
-// Another approach can be to find connected components and see if source and dest are in same connected component(DSU or union find)
