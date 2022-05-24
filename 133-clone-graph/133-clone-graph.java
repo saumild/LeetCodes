@@ -24,17 +24,21 @@ class Solution {
         if(node == null)
             return null;
         
-        if(v.containsKey(node)){
-            return v.get(node); 
+        LinkedList<Node> q = new LinkedList<>();
+        q.add(node);
+        v.put(node, new Node(node.val,new ArrayList<>()));
+        
+        while(!q.isEmpty()){
+            Node curr = q.poll();
+            for(Node nei: curr.neighbors){
+                if(!v.containsKey(nei)){
+                    v.put(nei, new Node(nei.val, new ArrayList<>()));
+                    q.add(nei);
+                }
+                v.get(curr).neighbors.add(v.get(nei));
+            }
+            
         }
-        
-        Node clone = new Node(node.val, new ArrayList<>());
-        
-        v.put(node, clone);
-        
-        for(Node nei: node.neighbors){
-            clone.neighbors.add(cloneGraph(nei));
-        }
-        return clone;
+        return v.get(node);
     }
 }
