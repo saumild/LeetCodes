@@ -14,10 +14,7 @@ class Solution {
                parent[p2] = p1; 
             }
         }
-        if(findParent(source) == findParent(destination))
-            return true;
-        else
-            return false;
+        return findParent(source) == findParent(destination);
     }
     
     public int findParent(int u){
