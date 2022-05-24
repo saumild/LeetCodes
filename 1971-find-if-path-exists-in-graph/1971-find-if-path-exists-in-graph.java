@@ -24,11 +24,9 @@ class Solution {
             
             if(curr == destination)
                 return true;
-            //List<Integer> next = map.get(curr);
-            //int i = 0;
+          
             for(int next : map.get(curr)){
-               // System.out.println(next);
-                //System.out.println(next.get(i));
+              
                 if(!v[next]){
                     if(next == destination)
                         return true;
