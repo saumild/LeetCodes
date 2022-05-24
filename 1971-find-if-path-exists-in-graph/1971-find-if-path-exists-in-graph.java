@@ -30,6 +30,8 @@ class Solution {
                // System.out.println(next);
                 //System.out.println(next.get(i));
                 if(!v[next.get(i)]){
+                    if(next.get(i) == destination)
+                        return true;
                     s.push(next.get(i));
                 }
                 i++;
