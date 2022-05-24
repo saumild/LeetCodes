@@ -24,17 +24,17 @@ class Solution {
             
             if(curr == destination)
                 return true;
-            List<Integer> next = map.get(curr);
-            int i = 0;
-            while(i<next.size()){
+            //List<Integer> next = map.get(curr);
+            //int i = 0;
+            for(int next : map.get(curr)){
                // System.out.println(next);
                 //System.out.println(next.get(i));
-                if(!v[next.get(i)]){
-                    if(next.get(i) == destination)
+                if(!v[next]){
+                    if(next == destination)
                         return true;
-                    s.push(next.get(i));
+                    s.push(next);
                 }
-                i++;
+                
             }
         }
         
