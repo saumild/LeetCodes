@@ -2,23 +2,26 @@
       boolean knows(int a, int b); */
 
 public class Solution extends Relation {
+    private int numberOfPeople;
+    
     public int findCelebrity(int n) {
-        boolean[] isParent = new boolean[n];
-        for(int i =0 ;i<n;i++) isParent[i] = true;
-        for(int i = 0; i<n;i++){
-            if(!isParent[i]) continue;
-            for(int j = 0;j<n;j++){
-                if(i == j) continue;
-                if(knows(i,j) || !knows(j,i)){
-                    isParent[i] = false;
-                }
+        numberOfPeople = n;
+        for (int i = 0; i < n; i++) {
+            if (isCelebrity(i)) {
+                return i;
             }
         }
-        for(int i =0;i<n;i++){
-            if(isParent[i] == true)
-                return i;
-        }
         return -1;
+    }
+    
+    private boolean isCelebrity(int i) {
+        for (int j = 0; j < numberOfPeople; j++) {
+            if (i == j) continue; // Don't ask if they know themselves.
+            if (knows(i, j) || !knows(j, i)) {
+                return false;
+            }
+        }
+        return true;
     }
     
 }
