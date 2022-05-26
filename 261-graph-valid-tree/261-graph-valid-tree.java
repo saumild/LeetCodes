@@ -1,5 +1,7 @@
 class Solution {
     public boolean validTree(int n, int[][] edges) {
+        if(edges.length != n-1)
+            return false;
         HashMap<Integer, List<Integer>> adj = new HashMap<>();
         for(int i =0; i<n;i++) adj.put(i, new ArrayList<>());
         for(int[] e: edges){
