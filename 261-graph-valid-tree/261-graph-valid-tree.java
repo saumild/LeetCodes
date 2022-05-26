@@ -8,24 +8,22 @@ class Solution {
             adj.get(e[0]).add(e[1]);
             adj.get(e[1]).add(e[0]);
         }
-        HashMap<Integer,Integer> parent = new HashMap<>();
-        parent.put(0,-1);
-        Stack<Integer> s = new Stack<>();
         
+        Set<Integer> visited = new HashSet<>();
+        Stack<Integer> s = new Stack<>();
+        visited.add(0);
         s.push(0);
         while(!s.isEmpty()){
             int curr = s.pop();
             for(int nei : adj.get(curr)){
-                if(parent.get(curr) == nei){
+                if(!visited.contains(nei)){
+                    s.push(nei);
+                    visited.add(nei);    
+                }else{
                     continue;
                 }
-                if(parent.containsKey(nei)){
-                   return false; 
-                }
-                s.push(nei);
-                parent.put(nei,curr);
             }
         }
-        return parent.size() == n;
+        return visited.size() == n;
     }
 }
