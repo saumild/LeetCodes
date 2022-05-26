@@ -6,10 +6,14 @@ public class Solution extends Relation {
     
     public int findCelebrity(int n) {
         numberOfPeople = n;
+        int cel = 0;
         for (int i = 0; i < n; i++) {
-            if (isCelebrity(i)) {
-                return i;
+            if (knows(cel,i)) {
+                cel = i;
             }
+        }
+        if(isCelebrity(cel)){
+            return cel;
         }
         return -1;
     }
