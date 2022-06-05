@@ -1,23 +1,24 @@
 class Solution {
+    
     public boolean wordBreak(String s, List<String> wordDict) {
-        Boolean[] dp = new Boolean[s.length()];
-        return wordRec(s,wordDict,0,dp);
-        
+        int n = s.length();
+        boolean[] visited = new boolean[n+1];
+        return visit(s, 0, wordDict, visited);
     }
     
-    public boolean wordRec(String s, List<String> wordDict, int start,Boolean[] dp){
-        int end = s.length();
-        if(start == s.length())
-                return true;
-        if(dp[start] != null){
-            return dp[start];
+    private boolean visit(String s, int p, List<String> wordDict, boolean[] visited) {
+        if (p == s.length()) {
+            return true;
         }
-        for(int i = start+1;i<=end;i++){
-            
-            if(wordDict.contains(s.substring(start,i)) && wordRec(s,wordDict,i,dp)){
-                return dp[start] = true;
+        visited[p] = true;
+        for (String word: wordDict) {
+            if (s.startsWith(word, p) && !visited[p + word.length()] ) {
+                if (visit(s, p + word.length(), wordDict, visited)) {
+                    return true;
+                }
             }
         }
-        return dp[start] = false;
+        return false;
     }
+  
 }
