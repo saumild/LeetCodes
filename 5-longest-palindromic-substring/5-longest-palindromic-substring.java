@@ -1,4 +1,5 @@
 class Solution {
+    
     public String longestPalindrome(String s) {
         if(s.isEmpty() || s.equals(""))
             return "";
