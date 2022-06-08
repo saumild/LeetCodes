@@ -1,15 +1,12 @@
 class Solution {
     public int distributeCandies(int[] candyType) {
-        HashMap<Integer, Integer> map = new HashMap<>();
+        HashSet<Integer> set = new HashSet<>();
         
         for(int i: candyType){
-            map.put(i, map.getOrDefault(i,0)+1);
+            set.add(i);
         }
         
-        if(candyType.length/2 < map.size())
-            return candyType.length/2;
-        else
-            return map.size();
+        return Math.min(set.size(), candyType.length/2);
         
     }
 }
