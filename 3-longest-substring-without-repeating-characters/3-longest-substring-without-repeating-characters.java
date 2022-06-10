@@ -13,3 +13,6 @@ class Solution {
         return maxLen;
     }
 }
+
+//TC = O(n)
+//SC = O(n) 
