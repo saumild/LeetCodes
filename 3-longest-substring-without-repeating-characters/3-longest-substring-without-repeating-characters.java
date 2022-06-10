@@ -15,4 +15,4 @@ class Solution {
 }
 
 //TC = O(n)
-//SC = O(n) 
+//SC = O(min(n,m)) 
