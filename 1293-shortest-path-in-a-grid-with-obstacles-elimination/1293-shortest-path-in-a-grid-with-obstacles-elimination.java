@@ -2,7 +2,9 @@ class Solution {
     public int shortestPath(int[][] grid, int k) {
         int m = grid.length;
         int n = grid[0].length;
-
+        if (k >= m + n - 2) {
+            return m + n - 2;
+        }
         Queue<int[]> q = new LinkedList<>();
         int[][] dirs ={{0,1},{1, 0},{0,-1},{-1,0}};
         boolean[][][] visited = new boolean[m][n][k+1];
