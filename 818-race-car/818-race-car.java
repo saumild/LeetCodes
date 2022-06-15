@@ -1,39 +1,45 @@
 class Solution {
     public int racecar(int target) {
-    Deque<int[]> queue = new LinkedList<>();
-    queue.offerLast(new int[] {0, 1}); // starts from position 0 with speed 1
-    
-    Set<String> visited = new HashSet<>();
-    visited.add(0 + " " + 1);
-    
-    for (int level = 0; !queue.isEmpty(); level++) {
-        for(int k = queue.size(); k > 0; k--) {
-            int[] cur = queue.pollFirst();  // cur[0] is position; cur[1] is speed
-            
-            if (cur[0] == target) {
-                return level;
+        Set<String> visited = new HashSet<>(); 
+        Queue<StateNode> queue = new LinkedList<>();
+        queue.add(new StateNode(1, 0));
+        int distance = 0;
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            for (int i = 0; i < levelSize; i++) {
+                StateNode cur = queue.poll();
+                if (cur.position == target) {
+                    return distance;
+                }
+                // if A
+                int nextPosition = cur.position + cur.speed;
+                int nextSpeed = cur.speed * 2;
+                if (!visited.contains(nextSpeed + "," + nextPosition) && Math.abs(target - nextPosition) < target) {
+                    visited.add(nextSpeed + "," + nextPosition);
+                    queue.offer(new StateNode(nextSpeed, nextPosition));
+                }             
+                // if R
+                nextPosition = cur.position;
+                nextSpeed = cur.speed > 0 ? -1 : 1;
+                if (!visited.contains(nextSpeed + "," + nextPosition) && Math.abs(target - nextPosition) < target) {
+                    visited.add(nextSpeed + "," + nextPosition);
+                    queue.offer(new StateNode(nextSpeed, nextPosition));
+                }
             }
-            
-            int[] nxt = new int[] {cur[0] + cur[1], cur[1] << 1};  // accelerate instruction
-            String key = (nxt[0] + " " + nxt[1]);
-            
-            if (!visited.contains(key) && 0 < nxt[0] && nxt[0] < (target << 1)) {
-                queue.offerLast(nxt);
-                visited.add(key);
-            }
-            
-            nxt = new int[] {cur[0], cur[1] > 0 ? -1 : 1};  // reverse instruction
-            key = (nxt[0] + " " + nxt[1]);
-            
-            if (!visited.contains(key) && 0 < nxt[0] && nxt[0] < (target << 1)) {
-                queue.offerLast(nxt);
-                visited.add(key);
-            }
+            distance++;
+        }
+        return -1;
+    }
+
+    class StateNode {
+        int speed;
+        int position;
+
+        public StateNode(int speed, int position) {
+            this.speed = speed;
+            this.position = position;
         }
     }
-    
-    return -1;
-}
 }
 
 /*
