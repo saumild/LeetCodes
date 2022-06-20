@@ -9,8 +9,7 @@ public class Solution extends VersionControl {
             if(isBadVersion(mid))
                 j = mid-1;
             else
-                i = mid+1;
-            
+                i = mid+1;  
         }
         return i;
     }
