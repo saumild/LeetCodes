@@ -22,3 +22,8 @@ class Solution {
         
     }
 }
+
+/*
+TC - Since heapify... O(NlogN)
+SC - O(N)
+*/
