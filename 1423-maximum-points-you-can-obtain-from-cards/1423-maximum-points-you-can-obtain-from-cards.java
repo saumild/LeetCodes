@@ -1,32 +1,23 @@
 class Solution {
     public int maxScore(int[] cardPoints, int k) {
-        int startingIndex = 0;
-        int presentSubarrayScore = 0;
-        int n = cardPoints.length;
-        int requiredSubarrayLength = n - k;
-        int minSubarrayScore;
-        int totalScore = 0;
-
-        // Total score obtained on selecting all the cards.
-        for (int i : cardPoints) {
-            totalScore += i;
+        int front = 0,rear = 0;
+        int maxScore = Integer.MIN_VALUE;
+        for(int i = 0; i< k;i++){
+            front+=cardPoints[i];
         }
-
-        minSubarrayScore = totalScore;
-
-        if (k == n) {
-             return totalScore;
+        
+        maxScore = Math.max(maxScore,front);
+        if(k == cardPoints.length)
+            return maxScore;
+        
+        for(int i = k;i>0;i--){
+            front -= cardPoints[i-1];
+            rear += cardPoints[cardPoints.length - k + i -1];
+            maxScore = Math.max(maxScore,front+rear);
         }
-
-        for (int i = 0; i < n; i++) {
-            presentSubarrayScore += cardPoints[i];
-            int presentSubarrayLength = i - startingIndex + 1;
-            // If a valid subarray (having size cardsPoints.length - k) is possible.
-            if (presentSubarrayLength == requiredSubarrayLength) {
-                minSubarrayScore = Math.min(minSubarrayScore, presentSubarrayScore);
-                presentSubarrayScore -= cardPoints[startingIndex++];
-            }
-        }
-        return totalScore - minSubarrayScore;
+        return maxScore;
     }
 }
+
+//1 2 3 4 5 6 1
+  
