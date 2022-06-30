@@ -1,4 +1,4 @@
-
+//Important to see code for median in O(n) avg
 class Solution {
     public int minMoves2(int[] nums) {
         int n = nums.length;
@@ -15,7 +15,7 @@ class Solution {
             return nums[start];
         }
         int left = start, right = end;
-        int mid = nums[start + right >> 1];
+        int mid = nums[(start + right)/2];
         while(left <= right){
             while(nums[left] < mid){
                 left++;
