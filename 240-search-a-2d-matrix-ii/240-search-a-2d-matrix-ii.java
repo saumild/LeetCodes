@@ -1,20 +1,20 @@
-/*TC : O(m+n) SC: O(1)*/
+/* TC : O(n+m) SC: O(1)*/
 class Solution {
     public boolean searchMatrix(int[][] matrix, int target) {
-        if (matrix == null || matrix.length == 0) {
-            return false;
-        }
-        int row =  matrix.length-1;
+
+        int row = matrix.length-1;
         int col = 0;
-        
-        while(row >= 0 && col < matrix[0].length){
-            if(matrix[row][col] > target)
+
+        while (row >= 0 && col < matrix[0].length) {
+            if (matrix[row][col] > target) {
                 row--;
-            else if(matrix[row][col] < target)
+            } else if (matrix[row][col] < target) {
                 col++;
-            else
+            } else { // found it
                 return true;
+            }
         }
+
         return false;
     }
 }
