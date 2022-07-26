@@ -8,18 +8,39 @@
  * }
  */
 class Solution {
-    TreeNode res = null; 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        helper(root, p, q);
-        return res; 
+        if (IsAncestor(p, q)) {
+            // p is q's ancestor
+            return p;
+        }
+        if (IsAncestor(q, p)) {
+            // q is p's ancestor
+            return q;
+        }
+        if((root.left == p ||  root.left == q) && (root.right == p ||  root.right == q))
+            return root;
+
+        
+        if (IsAncestor(root.left, p) && IsAncestor(root.left, q)) {
+            // p, q are both in left side
+            return lowestCommonAncestor(root.left, p ,q);
+        }
+        if (IsAncestor(root.right, p) && IsAncestor(root.right, q)) {
+            // p, q are both in right side
+            return lowestCommonAncestor(root.right, p ,q);
+        }
+        // p, q are in different sides of the root
+        return root;
+
     }
-    boolean helper(TreeNode root, TreeNode p, TreeNode q) { 
-        if(root == null) return false; 
-        int curr = root == p || root == q ? 1 : 0; 
-        int left = helper(root.left, p, q) ? 1 : 0;
-        int right = helper(root.right, p, q) ? 1 : 0; 
-        int sum = right + left + curr; 
-        if(sum == 2) res = root;
-        return sum == 1;
+    private boolean IsAncestor(TreeNode ancestorCandidate, TreeNode node) {
+        if (ancestorCandidate == null) {
+            return false;
+        }
+        if (ancestorCandidate.left == node||ancestorCandidate.right == node) {
+            return true;
+        }
+
+        return IsAncestor(ancestorCandidate.left, node)||IsAncestor(ancestorCandidate.right, node);
     }
 }
