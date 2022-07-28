@@ -3,11 +3,16 @@ class Solution {
         if (s.length() != t.length()) {
             return false;
         }
-        char[] s1 = s.toCharArray();
-        Arrays.sort(s1);
-        char[] t1 = t.toCharArray();
-        Arrays.sort(t1);
-        
-        return Arrays.equals(s1,t1);
+        int[] table = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            table[s.charAt(i) - 'a']++;
+        }
+        for (int i = 0; i < t.length(); i++) {
+            table[t.charAt(i) - 'a']--;
+            if (table[t.charAt(i) - 'a'] < 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }
