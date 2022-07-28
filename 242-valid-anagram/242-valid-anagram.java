@@ -5,6 +5,6 @@ class Solution {
         char[] t1 = t.toCharArray();
         Arrays.sort(t1);
         
-        return new String(s1).equals(new String(t1));
+        return Arrays.equals(s1,t1);
     }
 }
