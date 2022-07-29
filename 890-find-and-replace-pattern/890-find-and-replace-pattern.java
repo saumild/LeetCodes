@@ -1,26 +1,20 @@
 class Solution {
     public List<String> findAndReplacePattern(String[] words, String pattern) {
-        List<String> ans = new ArrayList();
-        for (String word: words)
-            if (match(word, pattern))
-                ans.add(word);
-        return ans;
+        int[] p = F(pattern);
+        List<String> res = new ArrayList<String>();
+        for (String w : words)
+            if (Arrays.equals(F(w), p)) res.add(w);
+        return res;
     }
 
-    public boolean match(String word, String pattern) {
-        Map<Character, Character> M = new HashMap();
-        for (int i = 0; i < word.length(); ++i) {
-            char w = word.charAt(i);
-            char p = pattern.charAt(i);
-            if (!M.containsKey(w)) M.put(w, p);
-            if (M.get(w) != p) return false;
+    public int[] F(String w) {
+        HashMap<Character, Integer> m = new HashMap<>();
+        int n = w.length();
+        int[] res = new int[n];
+        for (int i = 0; i < n; i++) {
+            m.putIfAbsent(w.charAt(i), m.size());
+            res[i] = m.get(w.charAt(i));
         }
-
-        boolean[] seen = new boolean[26];
-        for (char p: M.values()) {
-            if (seen[p - 'a']) return false;
-            seen[p - 'a'] = true;
-        }
-        return true;
+        return res;
     }
 }
